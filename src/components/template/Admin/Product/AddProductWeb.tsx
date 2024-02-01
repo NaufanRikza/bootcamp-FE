@@ -53,14 +53,7 @@ export default function AddProductWeb(
   const toast = useToast();
   const navigate = useNavigate();
   const [isDuplicate, setIsDuplicate] = useState(false);
-  const [isImageChanged, setIsImageChanged] = useState(false);
-  const defaultImage = `${import.meta.env.VITE_SERVER_URL}${props.image}` ?? "";
 
-  useEffect(() => {
-    if (!imageFile) {
-      setIsImageChanged(true);
-    }
-  }, [imageFile]);
 
   const formik = useFormik({
     initialValues: {
@@ -80,9 +73,7 @@ export default function AddProductWeb(
       try {
         let response;
         if (props.isUpdate) {
-          console.log(isImageChanged);
-          console.log(imageFile);
-          if (isImageChanged) {
+          if (!imageFile) {
             response = await updateProduct(props.id!, {
               branchId: formik.values.branchId,
               categoryId: formik.values.categoryId!,

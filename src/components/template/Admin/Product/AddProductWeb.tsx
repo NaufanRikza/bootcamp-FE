@@ -57,10 +57,10 @@ export default function AddProductWeb(
   const defaultImage = `${import.meta.env.VITE_SERVER_URL}${props.image}` ?? "";
 
   useEffect(() => {
-    if (props.image !== defaultImage) {
+    if (!imageFile) {
       setIsImageChanged(true);
     }
-  }, [props.image, defaultImage]);
+  }, [imageFile]);
 
   const formik = useFormik({
     initialValues: {
@@ -80,6 +80,8 @@ export default function AddProductWeb(
       try {
         let response;
         if (props.isUpdate) {
+          console.log(isImageChanged);
+          console.log(imageFile);
           if (isImageChanged) {
             response = await updateProduct(props.id!, {
               branchId: formik.values.branchId,
